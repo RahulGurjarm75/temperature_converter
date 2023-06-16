@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Temperature Converter</title>
+   <link rel="stylesheet" type="text/css" href="temp.css">
+</head>
+<body>
+  <h1>Temperature Converter</h1>
+  <div class="container">
+    <label>Temperature:</label>
+    <div class="input-container">
+      <input type="number" id="temperature" placeholder="Enter temperature">
+      <select id="unit" onchange="updateConvertToOptions()">
+        <option value="fahrenheit">Fahrenheit</option>
+        <option value="celsius">Celsius</option>
+        <option value="kelvin">Kelvin</option>
+      </select>
+    </div>
+    <br>
+        <label>Convert to: </label>
+        <div class="input-container">
+    <select id="convertToUnit">
+      <option value="celsius">Celsius</option>
+      <option value="kelvin">Kelvin</option>
+      <option value="fahrenheit">Fahrenheit</option>
+    </select>
+    </div>
+    
+    <div class="btn-container">
+      <button onclick="convert()">Convert</button>
+    </div>
+    
+    <div id="result"></div>
+  </div>
+
+  <script>
+    function updateConvertToOptions() {
+      var unit = document.getElementById('unit').value;
+      var convertToUnit = document.getElementById('convertToUnit');
+      
+      convertToUnit.innerHTML = '';
+      
+      if (unit === 'fahrenheit') {
+        convertToUnit.innerHTML += '<option value="celsius">Celsius</option>';
+        convertToUnit.innerHTML += '<option value="kelvin">Kelvin</option>';
+      } else if (unit === 'celsius') {
+        convertToUnit.innerHTML += '<option value="fahrenheit">Fahrenheit</option>';
+        convertToUnit.innerHTML += '<option value="kelvin">Kelvin</option>';
+      } else if (unit === 'kelvin') {
+        convertToUnit.innerHTML += '<option value="fahrenheit">Fahrenheit</option>';
+        convertToUnit.innerHTML += '<option value="celsius">Celsius</option>';
+      }
+    }
+    
+    function convert() {
+      var temperature = parseFloat(document.getElementById('temperature').value);
+      var unit = document.getElementById('unit').value;
+      var convertToUnit = document.getElementById('convertToUnit').value;
+      var result;
+      
+      if (unit === 'fahrenheit') {
+        if (convertToUnit === 'celsius') {
+          result = (temperature - 32) * 5 / 9;
+        } else if (convertToUnit === 'kelvin') {
+          result = (temperature - 32) * 5 / 9 + 273.15;
+        }
+      } else if (unit === 'celsius') {
+        if (convertToUnit === 'fahrenheit') {
+          result = (temperature * 9 / 5) + 32;
+        } else if (convertToUnit === 'kelvin') {
+          result = temperature + 273.15;
+        }
+      } else if (unit === 'kelvin') {
+        if (convertToUnit === 'fahrenheit') {
+          result = (temperature - 273.15) * 9 / 5 + 32;
+        } else if (convertToUnit === 'celsius') {
+          result = temperature - 273.15;
+        }
+      }
+      
+      document.getElementById('result').innerHTML = temperature + '&deg; ' + unit + ' is equal to ' + result.toFixed(2) + '&deg; ' + convertToUnit;
+    }
+  </script>
+</body>
+</html>
